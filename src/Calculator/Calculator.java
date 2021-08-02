@@ -21,13 +21,13 @@ public class Calculator {
     /** hash map for user-inputted operators and operands. */
     private HashMap<String, Integer> precedence = new HashMap<>();
     /** The list of converted postfix expressions */
-    private List< String > expressions;
+    private List< String > tokens;
     /** string builder that adds strings to it so it can be passed to view so user can see */
     private StringBuilder text;
 
     /** create a new Calculator object. */
     public Calculator() {
-        this.expressions = new ArrayList<>();
+        this.tokens = new ArrayList<>();
         this.text = new StringBuilder();
 
         /* populate the precedence map */
@@ -47,23 +47,45 @@ public class Calculator {
         // append the passed down string.
         this.text.append(TorAnd);
 
-        // append to expressions list and sort.
-        this.expressions.add(TorAnd);
-
+        // append to expressions list and notify observers.
+        this.tokens.add(TorAnd);
         notifyObservers();
     }
 
     /** calculates the total value of expressions in expressions attribute.*/
     public void equalSign() {
+        // make queue for postfix and stack for operators.
+        Queue<String> postfix = new LinkedList<>();
+        Stack<String> opStack = new Stack<>();
+
+        // transform tokens into postfix notation.
+
+
+
+
+
 
     }
 
-    /** helper function that sorts the "expressions" based on precedence */
-    private void sortList() {
-        // check to see if list has greater than one element.
-        if (this.expressions.size() > 1) {
-
+    /** helper function that sorts the "tokens" into postfix form
+     *
+     * @param postfix the postfix queue passed in from "equalSign()" function.
+     * @param opStack the stack of operators passed in form "equalSign()" function.
+     */
+    private void intoPostfix(Queue<String> postfix, Stack<String> opStack) {
+        // loop through the tokens list.
+        for (String token : this.tokens) {
+            if ()
         }
+    }
+
+    /** utility function that determines whether a string is numeric or not.
+     *
+     * @param token the string that is going to checked if it is a number or not.
+     * @return true if string is a number, false if not.
+     */
+    private boolean isNumeric(String token) {
+
     }
 
     /**
