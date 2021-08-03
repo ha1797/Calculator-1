@@ -75,7 +75,25 @@ public class Calculator {
     private void intoPostfix(Queue<String> postfix, Stack<String> opStack) {
         // loop through the tokens list.
         for (String token : this.tokens) {
-            if ()
+
+            // token is not an operator (it is numeric), so we put it in postfix.
+            if (!isOperator(token)) {
+                postfix.add(token);
+                continue;
+            }
+
+            // token is an operator, and opStack is empty, so we put it in opStack.
+            if (isOperator(token) && opStack.isEmpty()) {
+                opStack.add(token);
+                continue;
+            }
+
+            // token is an operator, and opStack is not empty, so check precedence.
+            if (isOperator(token) && !opStack.isEmpty()) {
+
+                // precedence of token is higher than or equal to precedence of top of opStack.
+                if ()
+            }
         }
     }
 
@@ -85,7 +103,39 @@ public class Calculator {
      * @return true if string is a number, false if not.
      */
     private boolean isNumeric(String token) {
+        int length = token.length();
+        int i = 0;
 
+        // check if first char of token is a negative sign and length is greater than one.
+        // return true if
+        if (token.charAt(0) == '-' && length > 1) {
+            return true;
+        }
+
+        // increase index by one.
+        ++i;
+
+
+    }
+
+    /**
+     * utility function that checks if token is an operator.
+     *
+     * @param token token of from token list.
+     * @return true if token is an operator, false if not.
+     */
+    private boolean isOperator(String token) { //
+        return token.equals("+") || token.equals("-") || token.equals("*") || token.equals("/");
+    }
+
+    /**
+     * utility function that checks whether top has greater or equal precedence to token.
+     * @param token a token from tokenList.
+     * @param top top of opStack.
+     * @return true if token has greater or equal precedence, false if token has less precedence than top.
+     */
+    private boolean greaterEqualPrecedence(String top, String token) {
+        return this.precedence.get(top) >= this.precedence.get(token);
     }
 
     /**
