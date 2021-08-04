@@ -59,7 +59,9 @@ public class Calculator {
         Stack<String> opStack = new Stack<>();
 
         // transform tokens into postfix notation.
+        intoPostfix(postfix, opStack);
 
+        //
 
 
 
@@ -92,30 +94,27 @@ public class Calculator {
             if (isOperator(token) && !opStack.isEmpty()) {
 
                 // precedence of token is higher than or equal to precedence of top of opStack.
-                if ()
+                if (greaterEqualPrecedence(token, opStack.peek())) {
+                    opStack.push(token);
+                }
+
+                // precedence of token is less than precedence of top of stack.
+                else {
+
+                    // loop until token has greater or equal precedence to top.
+                    while (!greaterEqualPrecedence(token, opStack.peek())) {
+                        postfix.add(opStack.pop());
+                    }
+                    // push token to opStack.
+                    opStack.push(token);
+                }
             }
         }
-    }
 
-    /** utility function that determines whether a string is numeric or not.
-     *
-     * @param token the string that is going to checked if it is a number or not.
-     * @return true if string is a number, false if not.
-     */
-    private boolean isNumeric(String token) {
-        int length = token.length();
-        int i = 0;
-
-        // check if first char of token is a negative sign and length is greater than one.
-        // return true if
-        if (token.charAt(0) == '-' && length > 1) {
-            return true;
+        // add remaining tokens in opStack to postfix.
+        while (!opStack.isEmpty()) {
+            postfix.add(opStack.pop());
         }
-
-        // increase index by one.
-        ++i;
-
-
     }
 
     /**
@@ -129,13 +128,13 @@ public class Calculator {
     }
 
     /**
-     * utility function that checks whether top has greater or equal precedence to token.
+     * utility function that checks whether the token has greater or equal precedence to top of opStack.
      * @param token a token from tokenList.
      * @param top top of opStack.
      * @return true if token has greater or equal precedence, false if token has less precedence than top.
      */
-    private boolean greaterEqualPrecedence(String top, String token) {
-        return this.precedence.get(top) >= this.precedence.get(token);
+    private boolean greaterEqualPrecedence(String token, String top) {
+        return this.precedence.get(token) >= this.precedence.get(top);
     }
 
     /**
