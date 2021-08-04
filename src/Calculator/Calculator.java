@@ -61,7 +61,50 @@ public class Calculator {
         // transform tokens into postfix notation.
         intoPostfix(postfix, opStack);
 
-        //
+        // loop through the postfix queue, and put each token into an ArrayList.
+        List<String> elements = new ArrayList<>();
+        while (!postfix.isEmpty()) {
+            elements.add(postfix.remove());
+        }
+
+        // loop through elements list until encounter an operator,
+        // then do that operation with previous two numbers.
+        String calculated = ""; // saved result of operation of previous two nums.
+        double calc = 0; // final result of "calculated" parsed into double type.
+        for (int i = 0; i < elements.size(); ++i) {
+
+            // token at index is an operator
+            if (isOperator(elements.get(i))) {
+
+                // no result saved in "calculated" string.
+                if (calculated.equals("")) {
+
+                    // solve expression and save result
+                    switch (elements.get(i)) {
+
+                        // token at index is a "+"
+                        case "+" -> calculated = String.valueOf(Double.parseDouble(elements.get(i - 2)) +
+                                Double.parseDouble(elements.get(i - 2)));
+
+                        // token at index is a "-"
+                        case "-" -> calculated = String.valueOf(Double.parseDouble(elements.get(i - 2)) -
+                                Double.parseDouble(elements.get(i - 2)));
+
+                        // token at index is a "*"
+                        case "*" -> calculated = String.valueOf(Double.parseDouble(elements.get(i - 2)) *
+                                Double.parseDouble(elements.get(i - 2)));
+
+                        // token at index is a "/"
+                        case "/" -> calculated = String.valueOf(Double.parseDouble(elements.get(i - 2)) /
+                                Double.parseDouble(elements.get(i - 2)));
+                    }
+                }
+
+                else {
+
+                }
+            }
+        }
 
 
 
