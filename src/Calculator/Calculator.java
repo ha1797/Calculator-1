@@ -20,7 +20,7 @@ public class Calculator {
     private final List< Observer< Calculator > > observers = new LinkedList<>();
     /** hash map for user-inputted operators and operands. */
     private HashMap<String, Integer> precedence;
-    /** The list of converted postfix expressions */
+    /** The list of numbers and operators inputted */
     private List< String > tokens;
     /** string builder that adds strings to it so it can be passed to view so user can see */
     private StringBuilder text;
@@ -104,6 +104,34 @@ public class Calculator {
 
         // make final answer into String and save it to global var.
         this.answer = String.valueOf( savedNumbers.pop() );
+    }
+
+    /** the "AC" button on the calculator - clears everything. */
+    public void Clear() {
+
+        // clear stringBuilder.
+        this.text.setLength(0);
+
+        // clear list of tokens.
+        this.tokens.clear();
+
+        // clear the answer string.
+        this.answer = "";
+    }
+
+    public void changeSign() {
+
+        // first character in string has negative, so change to positive.
+        if ( this.tokens.get( this.tokens.size() - 1 ).charAt(0) != '-' ) {
+            this.tokens.set( this.tokens.size() - 1, '-' + this.tokens.get( this.tokens.size() - 1 ));
+        }
+        // first character in list and st
+        else {
+            this.tokens.set( this.tokens.size() - 1,
+                    this.tokens.get( this.tokens.size() - 1 ).replace("-", ""));
+        }
+
+
     }
 
     /** helper function that sorts the "tokens" into postfix form

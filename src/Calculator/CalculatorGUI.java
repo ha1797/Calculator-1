@@ -1,6 +1,10 @@
 package Calculator;
 
 import javafx.application.Application;
+import javafx.scene.control.Button;
+import javafx.scene.control.TextField;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 
 /**
@@ -10,11 +14,26 @@ import javafx.stage.Stage;
 public class CalculatorGUI extends Application implements Observer< Calculator > {
     /** the model */
     Calculator model;
+    TextField output;
+
 
     /** CalculatorGUI constructor */
     public CalculatorGUI() {
         // initialize model
         this.model = new Calculator();
+        // initialize output
+        this.output = new TextField();
+    }
+
+    /** utility function that makes a gridPane with all buttons */
+    private GridPane makeGridPane() {
+
+        // All clear button
+        Button clear = new Button("AC");
+        clear.setOnAction( event -> model.Clear() );
+
+        // change sign button
+
     }
 
     /**
@@ -25,6 +44,9 @@ public class CalculatorGUI extends Application implements Observer< Calculator >
 
         // set the title
         myStage.setTitle("Calculator");
+
+        // make border pane.
+        BorderPane megaPane = new BorderPane();
 
         //
     }
