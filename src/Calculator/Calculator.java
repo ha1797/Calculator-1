@@ -23,7 +23,7 @@ public class Calculator {
     /** The list of numbers and operators inputted */
     private List< String > tokens;
     /** string builder that adds strings to it so it can be passed to view so user can see */
-    private StringBuilder text;
+    private String text;
     /** final answer in String form */
     private String answer;
 
@@ -31,7 +31,7 @@ public class Calculator {
     /** create a new Calculator object. */
     public Calculator() {
         this.tokens = new ArrayList<>();
-        this.text = new StringBuilder();
+        this.text = "";
         this.answer = "";
 
         /* populate the precedence map */
@@ -43,16 +43,26 @@ public class Calculator {
     }
 
     /**
-     * add operator or operand to string
+     * add operator to list
      *
-     * @param TorAnd the string passed in from view.
+     * @param tor the string (operator) passed in from view.
      */
-    public void operatorAndOperand(String TorAnd) {
+    public void Operator(String tor) {
+        // append operator to list.
+        this.tokens.add(tor);
+
+    }
+    /**
+     * make "text" equal to "and" and add operand to list.
+     *
+     * @param and the string (operand) passed in from view.
+     */
+    public void Operand(String and) {
         // append the passed down string.
-        this.text.append(TorAnd);
+        this.text = and;
 
         // append to expressions list and notify observers.
-        this.tokens.add(TorAnd);
+        this.tokens.add(and);
         notifyObservers();
     }
 
@@ -110,7 +120,7 @@ public class Calculator {
     public void Clear() {
 
         // clear stringBuilder.
-        this.text.setLength(0);
+        this.text = "";
 
         // clear list of tokens.
         this.tokens.clear();
@@ -124,14 +134,17 @@ public class Calculator {
         // first character in string has negative, so change to positive.
         if ( this.tokens.get( this.tokens.size() - 1 ).charAt(0) != '-' ) {
             this.tokens.set( this.tokens.size() - 1, '-' + this.tokens.get( this.tokens.size() - 1 ));
+            this.text = this.text.replace("-", "");
         }
-        // first character in list and st
+
+        // first character in string doesn't have negative, so change to negative.
         else {
             this.tokens.set( this.tokens.size() - 1,
                     this.tokens.get( this.tokens.size() - 1 ).replace("-", ""));
+            this.text = '-' + this.text;
         }
 
-
+        notifyObservers();
     }
 
     /** helper function that sorts the "tokens" into postfix form
