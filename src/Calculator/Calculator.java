@@ -19,16 +19,20 @@ public class Calculator {
     /** observers attribute. */
     private final List< Observer< Calculator > > observers = new LinkedList<>();
     /** hash map for user-inputted operators and operands. */
-    private HashMap<String, Integer> precedence = new HashMap<>();
+    private HashMap<String, Integer> precedence;
     /** The list of converted postfix expressions */
     private List< String > tokens;
     /** string builder that adds strings to it so it can be passed to view so user can see */
     private StringBuilder text;
+    /** final answer in String form */
+    private String answer;
+
 
     /** create a new Calculator object. */
     public Calculator() {
         this.tokens = new ArrayList<>();
         this.text = new StringBuilder();
+        this.answer = "";
 
         /* populate the precedence map */
         this.precedence = new HashMap<>();
@@ -69,47 +73,37 @@ public class Calculator {
 
         // loop through elements list until encounter an operator,
         // then do that operation with previous two numbers.
-        String calculated = ""; // saved result of operation of previous two nums.
-        double calc = 0; // final result of "calculated" parsed into double type.
-        for (int i = 0; i < elements.size(); ++i) {
+        Stack<Double> savedNumbers = new Stack<>(); // saved numbers
+        for (String element : elements) {
 
             // token at index is an operator
-            if (isOperator(elements.get(i))) {
+            if (isOperator(element)) {
 
-                // no result saved in "calculated" string.
-                if (calculated.equals("")) {
+                // save operands.
+                double b = savedNumbers.pop();
+                double a = savedNumbers.pop();
 
-                    // solve expression and save result
-                    switch (elements.get(i)) {
-
-                        // token at index is a "+"
-                        case "+" -> calculated = String.valueOf(Double.parseDouble(elements.get(i - 2)) +
-                                Double.parseDouble(elements.get(i - 2)));
-
-                        // token at index is a "-"
-                        case "-" -> calculated = String.valueOf(Double.parseDouble(elements.get(i - 2)) -
-                                Double.parseDouble(elements.get(i - 2)));
-
-                        // token at index is a "*"
-                        case "*" -> calculated = String.valueOf(Double.parseDouble(elements.get(i - 2)) *
-                                Double.parseDouble(elements.get(i - 2)));
-
-                        // token at index is a "/"
-                        case "/" -> calculated = String.valueOf(Double.parseDouble(elements.get(i - 2)) /
-                                Double.parseDouble(elements.get(i - 2)));
-                    }
+                // do operation.
+                switch (element) {
+                    case ("+"):
+                        savedNumbers.push(a + b);
+                    case ("-"):
+                        savedNumbers.push(a - b);
+                    case ("*"):
+                        savedNumbers.push(a * b);
+                    case ("/"):
+                        savedNumbers.push(a / b);
                 }
+            }
 
-                else {
-
-                }
+            // token is a number
+            else {
+                savedNumbers.push(Double.parseDouble(element));
             }
         }
 
-
-
-
-
+        // make final answer into String and save it to global var.
+        this.answer = String.valueOf( savedNumbers.pop() );
     }
 
     /** helper function that sorts the "tokens" into postfix form
