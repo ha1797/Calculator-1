@@ -24,8 +24,11 @@ public class Calculator {
     private List< String > tokens;
     /** string builder that adds strings to it so it can be passed to view so user can see */
     private String text;
-    /** tells whether there was a sign change for a number */
+
+    /** tells whether there was a sign change for a number. */
     private boolean changedSign;
+    /** tells whether the number was changed to a percent. */
+    private boolean changedPercent;
     /** final answer in String form */
     private String answer;
 
@@ -34,7 +37,9 @@ public class Calculator {
     public Calculator() {
         this.tokens = new ArrayList<>();
         this.text = "";
+
         this.changedSign = false;
+        this.changedPercent = false;
         this.answer = "";
 
         /* populate the precedence map */
@@ -150,12 +155,14 @@ public class Calculator {
             this.text = this.text.replace("-", "");
         }
 
+        this.changedSign = true;
         notifyObservers();
     }
 
-
+    /** change the text attribute to a percent */
     public void percent() {
-
+        this.text = String.valueOf( Double.parseDouble( this.text ) / 100 );
+        this.changedPercent = true;
     }
 
     /** helper function that sorts the "tokens" into postfix form
