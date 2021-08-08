@@ -184,6 +184,11 @@ public class Calculator {
         notifyObservers();
     }
 
+    /** getter function that returns text attribute for view. */
+    public String getText() {
+        return this.text;
+    }
+
     /** helper function that sorts the "tokens" into postfix form
      *
      * @param postfix the postfix queue passed in from "equalSign()" function.

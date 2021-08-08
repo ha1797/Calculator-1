@@ -1,7 +1,9 @@
 package Calculator;
 
 import javafx.application.Application;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
@@ -12,21 +14,26 @@ import javafx.stage.Stage;
  * @author Hoja Arzanesh <ha1797>
  */
 public class CalculatorGUI extends Application implements Observer< Calculator > {
-    /** ROWS */
-    int ROWS = 5;
-    /** COLS */
-    int COLS = 4;
 
     /** the model */
     Calculator model;
-    TextField output;
+    /** label that will display the user inputs and answer */
+    Label output;
+
+
 
     /** CalculatorGUI constructor */
     public CalculatorGUI() {
+
         // initialize model
         this.model = new Calculator();
         // initialize output
-        this.output = new TextField();
+        this.output = new Label();
+
+        // add ourselves as observers.
+        this.model.addObserver( this );
+
+        // change the label size
     }
 
     /** utility function that makes a gridPane with all buttons */
@@ -123,18 +130,36 @@ public class CalculatorGUI extends Application implements Observer< Calculator >
         // make border pane.
         BorderPane megaPane = new BorderPane();
 
+        // set the label on top.
+        megaPane.setTop(output);
+
         // make and add gridPane to borderPane.
         GridPane gridPane = makeGridPane();
         megaPane.setCenter( gridPane );
 
+        // make the scene, and set borderPane on it.
+        Scene myScene = new Scene( megaPane );
 
+        // set the scene.
+        myStage.setScene( myScene );
+
+        // show stage.
+        myStage.show();
     }
 
-    public void update(Calculator calc) {}
+    /**
+     * update method that updates the label attribute (output) to what the user inputted.
+     * @param calc the subject.
+     */
+    public void update(Calculator calc) {
+        this.output.setText( calc.getText() );
+    }
 
     /**
      * main method.
      * @param args command line.
      */
-    public static void main(String[] args) {}
+    public static void main(String[] args) {
+        Application.launch();
+    }
 }
