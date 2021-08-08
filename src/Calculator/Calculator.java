@@ -29,8 +29,6 @@ public class Calculator {
     private boolean changedSign;
     /** tells whether the number was changed to a percent. */
     private boolean changedPercent;
-    /** final answer in String form */
-    private String answer;
 
 
     /** create a new Calculator object. */
@@ -40,7 +38,6 @@ public class Calculator {
 
         this.changedSign = false;
         this.changedPercent = false;
-        this.answer = "";
 
         /* populate the precedence map */
         this.precedence = new HashMap<>();
@@ -71,14 +68,24 @@ public class Calculator {
      * @param and the string (operand) passed in from view.
      */
     public void Operand(String and) {
+
+        // check if there was a percent or sign change.
+        // if so, make text attribute equal to passed down string.
+        if ( this.changedSign || this.changedPercent ) {
+            this.text = and;
+        }
+
         // append the passed down string.
-        this.text += and;
+        else {
+            this.text += and;
+        }
 
         notifyObservers();
     }
 
     /** calculates the total value of expressions in expressions attribute.*/
     public void equalSign() {
+
         // make queue for postfix and stack for operators.
         Queue<String> postfix = new LinkedList<>();
         Stack<String> opStack = new Stack<>();
@@ -124,7 +131,9 @@ public class Calculator {
         }
 
         // make final answer into String and save it to global var.
-        this.answer = String.valueOf( savedNumbers.pop() );
+        this.text = String.valueOf( savedNumbers.pop() );
+
+        notifyObservers();
     }
 
     /** the "AC" button on the calculator - clears everything. */
@@ -135,9 +144,6 @@ public class Calculator {
 
         // clear list of tokens.
         this.tokens.clear();
-
-        // clear the answer string.
-        this.answer = "";
 
         notifyObservers();
     }
@@ -160,9 +166,22 @@ public class Calculator {
     }
 
     /** change the text attribute to a percent */
-    public void percent() {
+    public void changePercent() {
         this.text = String.valueOf( Double.parseDouble( this.text ) / 100 );
         this.changedPercent = true;
+
+        notifyObservers();
+    }
+
+    /** utility function that adds a decimal to the text attribute. */
+    public void addDecimal() {
+
+        // there is no decimal at the end of text attribute, so add one.
+        if ( this.text.charAt( this.text.length() - 1 ) != '.' ) {
+            this.text += '.';
+        }
+
+        notifyObservers();
     }
 
     /** helper function that sorts the "tokens" into postfix form
