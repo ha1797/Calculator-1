@@ -95,15 +95,20 @@ public class CalculatorGUI extends Application implements Observer< Calculator >
         // zero button
         Button zero = new Button( "0" );
         zero.setOnAction( event -> this.model.Operand( "0" ) );
-        gridPane.add(zero, 0, 4, 2, 1);
+        gridPane.add( zero, 0, 4, 2, 1 );
 
+        // decimal button
+        Button decimal = new Button( "." );
+        decimal.setOnAction( event -> this.model.addDecimal() );
+        gridPane.add( decimal, 2, 4 );
 
+        // solve button
+        Button solve = new Button( "=" );
+        solve.setOnAction( event -> this.model.equalSign() );
+        gridPane.add( solve, 3, 4 );
 
-
-
-
-
-
+        // return completed gridPane.
+        return gridPane;
     }
 
     /**
@@ -113,12 +118,16 @@ public class CalculatorGUI extends Application implements Observer< Calculator >
     public void start(Stage myStage) {
 
         // set the title
-        myStage.setTitle("Calculator");
+        myStage.setTitle( "Calculator" );
 
         // make border pane.
         BorderPane megaPane = new BorderPane();
 
-        //
+        // make and add gridPane to borderPane.
+        GridPane gridPane = makeGridPane();
+        megaPane.setCenter( gridPane );
+
+
     }
 
     public void update(Calculator calc) {}
