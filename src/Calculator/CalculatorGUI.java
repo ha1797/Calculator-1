@@ -30,9 +30,13 @@ public class CalculatorGUI extends Application implements Observer< Calculator >
 
         // All clear button
         Button clear = new Button("AC");
-        clear.setOnAction( event -> model.Clear() );
+        clear.setOnAction( event -> model.clear() );
 
         // change sign button
+        Button changeSign = new Button("+/-");
+        changeSign.setOnAction( event -> model.changeSign());
+
+
 
     }
 

@@ -24,6 +24,8 @@ public class Calculator {
     private List< String > tokens;
     /** string builder that adds strings to it so it can be passed to view so user can see */
     private String text;
+    /** tells whether there was a sign change for a number */
+    private boolean changedSign;
     /** final answer in String form */
     private String answer;
 
@@ -32,6 +34,7 @@ public class Calculator {
     public Calculator() {
         this.tokens = new ArrayList<>();
         this.text = "";
+        this.changedSign = false;
         this.answer = "";
 
         /* populate the precedence map */
@@ -43,26 +46,29 @@ public class Calculator {
     }
 
     /**
-     * add operator to list
+     * add operator to list and clear "text" attribute.
+     * DOES NOT notify the observers. Old value will still display on view.
      *
      * @param tor the string (operator) passed in from view.
      */
     public void Operator(String tor) {
-        // append operator to list.
+        // append current number inputted & operator to list.
+        this.tokens.add(this.text);
         this.tokens.add(tor);
 
+        // clear "text"
+        this.text = "";
     }
     /**
-     * make "text" equal to "and" and add operand to list.
+     * add passed down string to text attribute.
+     * notify observers to change value of textField in view.
      *
      * @param and the string (operand) passed in from view.
      */
     public void Operand(String and) {
         // append the passed down string.
-        this.text = and;
+        this.text += and;
 
-        // append to expressions list and notify observers.
-        this.tokens.add(and);
         notifyObservers();
     }
 
@@ -117,7 +123,7 @@ public class Calculator {
     }
 
     /** the "AC" button on the calculator - clears everything. */
-    public void Clear() {
+    public void clear() {
 
         // clear stringBuilder.
         this.text = "";
@@ -127,24 +133,29 @@ public class Calculator {
 
         // clear the answer string.
         this.answer = "";
+
+        notifyObservers();
     }
 
+    /** change the sign of text attribute. */
     public void changeSign() {
 
-        // first character in string has negative, so change to positive.
-        if ( this.tokens.get( this.tokens.size() - 1 ).charAt(0) != '-' ) {
-            this.tokens.set( this.tokens.size() - 1, '-' + this.tokens.get( this.tokens.size() - 1 ));
-            this.text = this.text.replace("-", "");
-        }
-
-        // first character in string doesn't have negative, so change to negative.
-        else {
-            this.tokens.set( this.tokens.size() - 1,
-                    this.tokens.get( this.tokens.size() - 1 ).replace("-", ""));
+        // sign is positive, change to negative.
+        if ( this.text.charAt(0) != '-' ) {
             this.text = '-' + this.text;
         }
 
+        // sign is negative, change to positive (delete negative sign).
+        else {
+            this.text = this.text.replace("-", "");
+        }
+
         notifyObservers();
+    }
+
+
+    public void percent() {
+
     }
 
     /** helper function that sorts the "tokens" into postfix form
