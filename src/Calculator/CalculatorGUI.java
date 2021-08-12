@@ -43,21 +43,25 @@ public class CalculatorGUI extends Application implements Observer< Calculator >
 
         // All clear button
         Button clear = new Button("AC");
+        clear.setMinWidth(75);
         clear.setOnAction( event -> this.model.clear() );
         gridPane.add(clear, 0, 0);
 
         // change sign button
         Button changeSign = new Button("+/-");
+        changeSign.setMinWidth(75);
         changeSign.setOnAction( event -> this.model.changeSign());
         gridPane.add(changeSign, 1, 0);
 
         // change percent button
         Button changePercent = new Button("%");
+        changePercent.setMinWidth(75);
         changePercent.setOnAction( event -> this.model.changePercent() );
         gridPane.add(changePercent, 2, 0);
 
         // divide button
         Button divide = new Button("/");
+        divide.setMinWidth(75);
         divide.setOnAction( event -> this.model.Operator("/") );
         gridPane.add(divide, 3, 0);
 
@@ -73,6 +77,7 @@ public class CalculatorGUI extends Application implements Observer< Calculator >
 
                 // make button, set controller, and add to gridPane.
                 Button button = new Button( String.valueOf( num ) );
+                button.setMinWidth(75);
                 button.setOnAction( event -> this.model.Operand( String.valueOf( finalNum ) ) );
                 gridPane.add( button, col, row );
 
@@ -86,31 +91,38 @@ public class CalculatorGUI extends Application implements Observer< Calculator >
 
         // multiply button
         Button multiply = new Button( "*" );
+        multiply.setMinWidth(75);
         multiply.setOnAction( event -> this.model.Operator( "* " ) );
         gridPane.add( multiply, 3, 1 );
 
         // subtract button
         Button subtract = new Button( "-" );
+        subtract.setMinWidth(75);
         subtract.setOnAction( event -> this.model.Operator( "-" ) );
         gridPane.add( subtract, 3, 2 );
 
         // add button
         Button add = new Button( "+" );
+        add.setMinWidth(75);
         add.setOnAction( event -> this.model.Operator( "+" ) );
         gridPane.add( add, 3, 3 );
 
         // zero button
         Button zero = new Button( "0" );
+        zero.setMinWidth(75);
         zero.setOnAction( event -> this.model.Operand( "0" ) );
         gridPane.add( zero, 0, 4, 2, 1 );
+        zero.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
 
         // decimal button
         Button decimal = new Button( "." );
+        decimal.setMinWidth(75);
         decimal.setOnAction( event -> this.model.addDecimal() );
         gridPane.add( decimal, 2, 4 );
 
         // solve button
         Button solve = new Button( "=" );
+        solve.setMinWidth(75);
         solve.setOnAction( event -> this.model.equalSign() );
         gridPane.add( solve, 3, 4 );
 
