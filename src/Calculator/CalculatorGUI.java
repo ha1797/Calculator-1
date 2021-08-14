@@ -49,7 +49,7 @@ public class CalculatorGUI extends Application implements Observer< Calculator >
         Button clear = new Button("AC");
         clear.setMinWidth( 125 );
         clear.setMinHeight( 85 );
-        clear.setFont( new Font( 25 ) );
+        clear.setFont( new Font( 45 ) );
         clear.setOnAction( event -> this.model.clear() );
         gridPane.add( clear, 0, 0 );
 
@@ -57,7 +57,7 @@ public class CalculatorGUI extends Application implements Observer< Calculator >
         Button changeSign = new Button("+/-");
         changeSign.setMinWidth( 125 );
         changeSign.setMinHeight( 85 );
-        changeSign.setFont( new Font( 25 ) );
+        changeSign.setFont( new Font( 45 ) );
         changeSign.setOnAction( event -> this.model.changeSign());
         gridPane.add( changeSign, 1, 0 );
 
@@ -65,7 +65,7 @@ public class CalculatorGUI extends Application implements Observer< Calculator >
         Button changePercent = new Button("%");
         changePercent.setMinWidth( 125 );
         changePercent.setMinHeight( 85 );
-        changePercent.setFont( new Font( 25 ) );
+        changePercent.setFont( new Font( 45 ) );
         changePercent.setOnAction( event -> this.model.changePercent() );
         gridPane.add( changePercent, 2, 0 );
 
@@ -73,7 +73,7 @@ public class CalculatorGUI extends Application implements Observer< Calculator >
         Button divide = new Button("/");
         divide.setMinWidth( 125 );
         divide.setMinHeight( 85 );
-        changePercent.setFont( new Font( 25 ) );
+        changePercent.setFont( new Font( 45 ) );
         divide.setOnAction( event -> this.model.Operator("/") );
         gridPane.add( divide, 3, 0 );
 
@@ -91,7 +91,7 @@ public class CalculatorGUI extends Application implements Observer< Calculator >
                 Button button = new Button( String.valueOf( num ) );
                 button.setMinWidth( 125 );
                 button.setMinHeight( 85 );
-                button.setFont( new Font( 25 ) );
+                button.setFont( new Font( 45 ) );
                 button.setOnAction( event -> this.model.Operand( String.valueOf( finalNum ) ) );
                 gridPane.add( button, col, row );
 
@@ -107,7 +107,7 @@ public class CalculatorGUI extends Application implements Observer< Calculator >
         Button multiply = new Button( "*" );
         multiply.setMinWidth( 125 );
         multiply.setMinHeight( 85 );
-        multiply.setFont( new Font( 25 ) );
+        multiply.setFont( new Font( 45 ) );
         multiply.setOnAction( event -> this.model.Operator( "*" ) );
         gridPane.add( multiply, 3, 1 );
 
@@ -115,7 +115,7 @@ public class CalculatorGUI extends Application implements Observer< Calculator >
         Button subtract = new Button( "-" );
         subtract.setMinWidth( 125 );
         subtract.setMinHeight( 85 );
-        subtract.setFont( new Font( 25 ) );
+        subtract.setFont( new Font( 45 ) );
         subtract.setOnAction( event -> this.model.Operator( "-" ) );
         gridPane.add( subtract, 3, 2 );
 
@@ -123,7 +123,7 @@ public class CalculatorGUI extends Application implements Observer< Calculator >
         Button add = new Button( "+" );
         add.setMinWidth( 125 );
         add.setMinHeight( 85 );
-        add.setFont( new Font( 25 ) );
+        add.setFont( new Font( 45 ) );
         add.setOnAction( event -> this.model.Operator( "+" ) );
         gridPane.add( add, 3, 3 );
 
@@ -131,7 +131,7 @@ public class CalculatorGUI extends Application implements Observer< Calculator >
         Button zero = new Button( "0" );
         zero.setMinWidth( 125 );
         zero.setMinHeight( 85 );
-        zero.setFont( new Font( 25 ) );
+        zero.setFont( new Font( 45 ) );
         zero.setOnAction( event -> this.model.Operand( "0" ) );
         gridPane.add( zero, 0, 4, 2, 1 );
         zero.setMaxSize( Double.MAX_VALUE, Double.MAX_VALUE );
@@ -140,7 +140,7 @@ public class CalculatorGUI extends Application implements Observer< Calculator >
         Button decimal = new Button( "." );
         decimal.setMinWidth( 125 );
         decimal.setMinHeight( 85 );
-        decimal.setFont( new Font( 25 ) );
+        decimal.setFont( new Font( 45 ) );
         decimal.setOnAction( event -> this.model.addDecimal() );
         gridPane.add( decimal, 2, 4 );
 
@@ -148,7 +148,7 @@ public class CalculatorGUI extends Application implements Observer< Calculator >
         Button solve = new Button( "=" );
         solve.setMinWidth( 125 );
         solve.setMinHeight( 85 );
-        solve.setFont( new Font( 25 ) );
+        solve.setFont( new Font( 45 ) );
         solve.setOnAction( event -> this.model.equalSign() );
         gridPane.add( solve, 3, 4 );
 
