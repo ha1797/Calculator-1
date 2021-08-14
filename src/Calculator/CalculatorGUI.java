@@ -4,7 +4,6 @@ import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.text.Font;
@@ -21,18 +20,32 @@ public class CalculatorGUI extends Application implements Observer< Calculator >
     /** label that will display the user inputs and answer */
     Label output;
 
-
+    /** font size of the label attribute (output) */
+    int LABEL_FONT_SIZE = 50;
+    /** height of label attribute (output) */
+    int LABEL_HEIGHT = 75;
+    /** font size of each button on pad */
+    int BUTTON_FONT_SIZE = 45;
+    /** width of each button on pad */
+    int BUTTON_WIDTH = 125;
+    /** height of each button on pad */
+    int BUTTON_HEIGHT = 85;
+    /** width of scene */
+    int SCENE_WIDTH = 500;
+    /** height of scene */
+    int SCENE_HEIGHT = 500;
 
     /** CalculatorGUI constructor */
     public CalculatorGUI() {
 
         // initialize model
         this.model = new Calculator();
+
         // initialize output
         this.output = new Label();
-        this.output.setMinHeight( 75 );
+        this.output.setMinHeight( LABEL_HEIGHT );
         this.output.autosize();
-        this.output.setFont( new Font( 50 ) );
+        this.output.setFont( new Font( LABEL_FONT_SIZE ) );
 
         // add ourselves as observers.
         this.model.addObserver( this );
@@ -46,35 +59,35 @@ public class CalculatorGUI extends Application implements Observer< Calculator >
         GridPane gridPane = new GridPane();
 
         // All clear button
-        Button clear = new Button("AC");
-        clear.setMinWidth( 125 );
-        clear.setMinHeight( 85 );
-        clear.setFont( new Font( 45 ) );
+        Button clear = new Button( "AC" );
+        clear.setMinWidth( BUTTON_WIDTH );
+        clear.setMinHeight( BUTTON_HEIGHT );
+        clear.setFont( new Font( BUTTON_FONT_SIZE ) );
         clear.setOnAction( event -> this.model.clear() );
         gridPane.add( clear, 0, 0 );
 
         // change sign button
-        Button changeSign = new Button("+/-");
-        changeSign.setMinWidth( 125 );
-        changeSign.setMinHeight( 85 );
-        changeSign.setFont( new Font( 45 ) );
+        Button changeSign = new Button( "+/-" );
+        changeSign.setMinWidth( BUTTON_WIDTH );
+        changeSign.setMinHeight( BUTTON_HEIGHT );
+        changeSign.setFont( new Font( BUTTON_FONT_SIZE ) );
         changeSign.setOnAction( event -> this.model.changeSign());
         gridPane.add( changeSign, 1, 0 );
 
         // change percent button
-        Button changePercent = new Button("%");
-        changePercent.setMinWidth( 125 );
-        changePercent.setMinHeight( 85 );
-        changePercent.setFont( new Font( 45 ) );
+        Button changePercent = new Button( "%" );
+        changePercent.setMinWidth( BUTTON_WIDTH );
+        changePercent.setMinHeight( BUTTON_HEIGHT );
+        changePercent.setFont( new Font( BUTTON_FONT_SIZE ) );
         changePercent.setOnAction( event -> this.model.changePercent() );
         gridPane.add( changePercent, 2, 0 );
 
         // divide button
-        Button divide = new Button("/");
-        divide.setMinWidth( 125 );
-        divide.setMinHeight( 85 );
-        divide.setFont( new Font( 45 ) );
-        divide.setOnAction( event -> this.model.Operator("/") );
+        Button divide = new Button( "/" );
+        divide.setMinWidth( BUTTON_WIDTH );
+        divide.setMinHeight( BUTTON_HEIGHT );
+        divide.setFont( new Font( BUTTON_FONT_SIZE ) );
+        divide.setOnAction( event -> this.model.Operator( "/" ) );
         gridPane.add( divide, 3, 0 );
 
         // make buttons 1-9 using for loop.
@@ -89,9 +102,9 @@ public class CalculatorGUI extends Application implements Observer< Calculator >
 
                 // make button, set controller, and add to gridPane.
                 Button button = new Button( String.valueOf( num ) );
-                button.setMinWidth( 125 );
-                button.setMinHeight( 85 );
-                button.setFont( new Font( 45 ) );
+                button.setMinWidth( BUTTON_WIDTH );
+                button.setMinHeight( BUTTON_HEIGHT );
+                button.setFont( new Font( BUTTON_FONT_SIZE ) );
                 button.setOnAction( event -> this.model.Operand( String.valueOf( finalNum ) ) );
                 gridPane.add( button, col, row );
 
@@ -105,50 +118,50 @@ public class CalculatorGUI extends Application implements Observer< Calculator >
 
         // multiply button
         Button multiply = new Button( "*" );
-        multiply.setMinWidth( 125 );
-        multiply.setMinHeight( 85 );
-        multiply.setFont( new Font( 45 ) );
+        multiply.setMinWidth( BUTTON_WIDTH );
+        multiply.setMinHeight( BUTTON_HEIGHT );
+        multiply.setFont( new Font( BUTTON_FONT_SIZE ) );
         multiply.setOnAction( event -> this.model.Operator( "*" ) );
         gridPane.add( multiply, 3, 1 );
 
         // subtract button
         Button subtract = new Button( "-" );
-        subtract.setMinWidth( 125 );
-        subtract.setMinHeight( 85 );
-        subtract.setFont( new Font( 45 ) );
+        subtract.setMinWidth( BUTTON_WIDTH );
+        subtract.setMinHeight( BUTTON_HEIGHT );
+        subtract.setFont( new Font( BUTTON_FONT_SIZE ) );
         subtract.setOnAction( event -> this.model.Operator( "-" ) );
         gridPane.add( subtract, 3, 2 );
 
         // add button
         Button add = new Button( "+" );
-        add.setMinWidth( 125 );
-        add.setMinHeight( 85 );
-        add.setFont( new Font( 45 ) );
+        add.setMinWidth( BUTTON_WIDTH );
+        add.setMinHeight( BUTTON_HEIGHT );
+        add.setFont( new Font( BUTTON_FONT_SIZE ) );
         add.setOnAction( event -> this.model.Operator( "+" ) );
         gridPane.add( add, 3, 3 );
 
         // zero button
         Button zero = new Button( "0" );
-        zero.setMinWidth( 125 );
-        zero.setMinHeight( 85 );
-        zero.setFont( new Font( 45 ) );
+        zero.setMinWidth( BUTTON_WIDTH );
+        zero.setMinHeight( BUTTON_HEIGHT );
+        zero.setFont( new Font( BUTTON_FONT_SIZE ) );
         zero.setOnAction( event -> this.model.Operand( "0" ) );
         gridPane.add( zero, 0, 4, 2, 1 );
         zero.setMaxSize( Double.MAX_VALUE, Double.MAX_VALUE );
 
         // decimal button
         Button decimal = new Button( "." );
-        decimal.setMinWidth( 125 );
-        decimal.setMinHeight( 85 );
-        decimal.setFont( new Font( 45 ) );
+        decimal.setMinWidth( BUTTON_WIDTH );
+        decimal.setMinHeight( BUTTON_HEIGHT );
+        decimal.setFont( new Font( BUTTON_FONT_SIZE ) );
         decimal.setOnAction( event -> this.model.addDecimal() );
         gridPane.add( decimal, 2, 4 );
 
         // solve button
         Button solve = new Button( "=" );
-        solve.setMinWidth( 125 );
-        solve.setMinHeight( 85 );
-        solve.setFont( new Font( 45 ) );
+        solve.setMinWidth( BUTTON_WIDTH );
+        solve.setMinHeight( BUTTON_HEIGHT );
+        solve.setFont( new Font( BUTTON_FONT_SIZE) );
         solve.setOnAction( event -> this.model.equalSign() );
         gridPane.add( solve, 3, 4 );
 
@@ -169,14 +182,14 @@ public class CalculatorGUI extends Application implements Observer< Calculator >
         BorderPane megaPane = new BorderPane();
 
         // set the label on top.
-        megaPane.setTop(output);
+        megaPane.setTop( this.output );
 
         // make and add gridPane to borderPane.
         GridPane gridPane = makeGridPane();
         megaPane.setCenter( gridPane );
 
         // make the scene, and set borderPane on it.
-        Scene myScene = new Scene( megaPane, 500, 500 );
+        Scene myScene = new Scene( megaPane, SCENE_WIDTH, SCENE_HEIGHT );
 
         // set the scene.
         myStage.setScene( myScene );
