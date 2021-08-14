@@ -73,7 +73,7 @@ public class CalculatorGUI extends Application implements Observer< Calculator >
         Button divide = new Button("/");
         divide.setMinWidth( 125 );
         divide.setMinHeight( 85 );
-        changePercent.setFont( new Font( 45 ) );
+        divide.setFont( new Font( 45 ) );
         divide.setOnAction( event -> this.model.Operator("/") );
         gridPane.add( divide, 3, 0 );
 
@@ -100,7 +100,7 @@ public class CalculatorGUI extends Application implements Observer< Calculator >
             }
 
             // decrease num by 5.
-            num -= 5;
+            num -= 6;
         }
 
         // multiply button

@@ -132,6 +132,9 @@ public class Calculator {
         // make final answer into String and save it to global var.
         this.text = String.valueOf( savedNumbers.pop() );
 
+        // make the string into integer-type, if possible.
+        integerCheckerAndConverter( this.text );
+
         notifyObservers();
     }
 
@@ -247,6 +250,32 @@ public class Calculator {
      */
     private boolean greaterEqualPrecedence( String token, String top ) {
         return this.precedence.get( token ) >= this.precedence.get( top );
+    }
+
+    /**
+     * utility function that checks and converts the double-type contents of a string into
+     * a string whose contents are integer-type.
+     * @param number the string passed down that is to be modified.
+     */
+    private void integerCheckerAndConverter( String number ) {
+
+        // loop until encounter a dot.
+        int i = 0;
+        while ( number.charAt( i ) != '.' ) {
+
+            // add one to index.
+            ++i;
+        }
+
+        // check if char after dot is a zero and if it is the last char of string.
+        if ( number.charAt( i + 1 ) == '0' && i + 1 == number.length() - 1 ) {
+
+            // make the number string an integer.
+            number = number.replace( ".0", "" );
+        }
+
+        // make global var into modified string.
+        this.text = number;
     }
 
     /**
