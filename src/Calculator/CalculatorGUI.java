@@ -46,6 +46,7 @@ public class CalculatorGUI extends Application implements Observer< Calculator >
         this.output.setMinHeight( LABEL_HEIGHT );
         this.output.autosize();
         this.output.setFont( new Font( LABEL_FONT_SIZE ) );
+        this.output.setText( "0" );
 
         // add ourselves as observers.
         this.model.addObserver( this );

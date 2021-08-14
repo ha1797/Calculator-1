@@ -33,13 +33,16 @@ public class Calculator {
 
     /** create a new Calculator object. */
     public Calculator() {
-        this.tokens = new ArrayList<>();
-        this.text = "";
 
+        // set attributes.
+        this.tokens = new ArrayList<>();
+        this.text = "0";
+
+        // set booleans to false.
         this.changedSign = false;
         this.changedPercent = false;
 
-        /* populate the precedence map */
+        // populate the precedence map
         this.precedence = new HashMap<>();
         this.precedence.put( MULTIPLY, 3 );
         this.precedence.put( DIVIDE, 3 );
@@ -60,6 +63,9 @@ public class Calculator {
 
         // clear "text"
         this.text = "";
+
+        // reset booleans.
+        resetBooleans();
     }
     /**
      * add passed down string to text attribute.
@@ -69,13 +75,21 @@ public class Calculator {
      */
     public void Operand( String and ) {
 
-        // check if there was a percent or sign change.
-        // if so, make text attribute equal to passed down string.
-        if ( this.changedSign || this.changedPercent ) {
+        // text attribute is zero, change it to passed-down string.
+        if ( this.text.equals( "0" ) ) {
             this.text = and;
         }
 
-        // append the passed down string.
+        // check if there was a percent or sign change.
+        // if so, make text attribute equal to passed-down string.
+        else if ( ( this.changedSign || this.changedPercent ) ) {
+            this.text = and;
+
+            // reset booleans.
+            resetBooleans();
+        }
+
+        // append the passed-down string.
         else {
             this.text += and;
         }
@@ -135,17 +149,23 @@ public class Calculator {
         // make the string into integer-type, if possible.
         integerCheckerAndConverter( this.text );
 
+        // reset booleans.
+        resetBooleans();
+
         notifyObservers();
     }
 
     /** the "AC" button on the calculator - clears everything. */
     public void clear() {
 
-        // clear stringBuilder.
-        this.text = "";
+        // make text attribute zero.
+        this.text = "0";
 
         // clear list of tokens.
         this.tokens.clear();
+
+        // reset booleans.
+        resetBooleans();
 
         notifyObservers();
     }
@@ -153,14 +173,15 @@ public class Calculator {
     /** change the sign of text attribute. */
     public void changeSign() {
 
-        // sign is positive, change to negative.
-        if ( this.text.charAt(0) != '-' ) {
+        // sign is positive, change to negative, not zero.
+        if ( this.text.charAt( 0 ) != '-' && !this.text.equals( "0" ) ) {
             this.text = '-' + this.text;
         }
 
-        // sign is negative, change to positive (delete negative sign).
-        else {
+        // sign is negative, change to positive (delete negative sign), not zero.
+        else if ( this.text.charAt( 0 ) == '-' && !this.text.equals( "0" ) ) {
             this.text = this.text.replace("-", "");
+            this.changedSign = true;
         }
 
         this.changedSign = true;
@@ -169,9 +190,12 @@ public class Calculator {
 
     /** change the text attribute to a percent */
     public void changePercent() {
-        this.text = String.valueOf( Double.parseDouble( this.text ) / 100 );
-        this.changedPercent = true;
 
+        if ( !this.text.equals( "0" ) ) {
+            this.text = String.valueOf(Double.parseDouble(this.text) / 100);
+        }
+
+        this.changedPercent = true;
         notifyObservers();
     }
 
@@ -276,6 +300,12 @@ public class Calculator {
 
         // make global var into modified string.
         this.text = number;
+    }
+
+    /** resets the booleans ( signChange and percentChange ) to false. */
+    private void resetBooleans() {
+        this.changedSign = false;
+        this.changedPercent = false;
     }
 
     /**
