@@ -128,13 +128,28 @@ public class Calculator {
                 double b = savedNumbers.pop();
                 double a = savedNumbers.pop();
 
-                // do operation.
-                switch (element) {
-                    case ("+") -> savedNumbers.push(a + b);
-                    case ("-") -> savedNumbers.push(a - b);
-                    case ("*") -> savedNumbers.push(a * b);
-                    case ("/") -> savedNumbers.push(a / b);
+                // try for undefined error.
+                try {
+
+                    // do operation.
+                    switch (element) {
+                        case ("+") -> savedNumbers.push(a + b);
+                        case ("-") -> savedNumbers.push(a - b);
+                        case ("*") -> savedNumbers.push(a * b);
+                        case ("/") -> {
+                            if ( b == 0.0 ) {
+                                throw new ArithmeticException();
+                            }
+                            savedNumbers.push(a / b);
+                        }
+                    }
                 }
+
+                catch( Exception e ) {
+                    this.text = "Undefined";
+                    break;
+                }
+
             }
 
             // token is a number
@@ -143,11 +158,15 @@ public class Calculator {
             }
         }
 
-        // make final answer into String and save it to global var.
-        this.text = String.valueOf( savedNumbers.pop() );
+        // check if text attribute is undefined.
+        if ( !this.text.equals( "Undefined" ) ) {
 
-        // make the string into integer-type, if possible.
-        integerCheckerAndConverter( this.text );
+            // make final answer into String and save it to global var.
+            this.text = String.valueOf(savedNumbers.pop());
+
+            // make the string into integer-type, if possible.
+            integerCheckerAndConverter(this.text);
+        }
 
         // reset booleans.
         resetBooleans();
